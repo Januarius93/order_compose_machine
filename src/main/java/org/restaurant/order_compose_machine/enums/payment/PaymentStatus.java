@@ -1,4 +1,4 @@
-package org.restaurant.order_compose_machine.enums;
+package org.restaurant.order_compose_machine.enums.payment;
 
 public enum PaymentStatus {
   PENDING, // Payment is pending, hasn't been processed yet
