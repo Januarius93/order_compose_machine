@@ -1,4 +1,4 @@
-package org.restaurant.order_compose_machine.enums;
+package org.restaurant.order_compose_machine.enums.payment;
 
 public enum PaymentMethod {
   DEBIT_CARD, // Payment made via debit card

@@ -1,4 +1,4 @@
-package org.restaurant.order_compose_machine.enums;
+package org.restaurant.order_compose_machine.enums.order;
 
 public enum OrderStatus {
     PENDING,             // Order has been created but not yet processed
