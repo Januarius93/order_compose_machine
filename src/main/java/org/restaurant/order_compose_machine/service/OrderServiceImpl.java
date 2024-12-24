@@ -1,6 +1,6 @@
 package org.restaurant.order_compose_machine.service;
 
-import jakarta.transaction.Transactional;
+import org.restaurant.order_compose_machine.config.ApiResponse;
 import org.restaurant.order_compose_machine.controller.OrderController;
 
 import org.restaurant.order_compose_machine.dto.order.OrderDto;
@@ -10,9 +10,8 @@ import org.restaurant.order_compose_machine.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -23,9 +22,23 @@ public class OrderServiceImpl implements OrderService {
   @Autowired private OrderMapper orderMapper;
 
   @Override
-  public OrderDto proceedWithOrder(OrderDto orderDto) {
+  public ApiResponse<OrderDto> proceedWithOrder(OrderDto orderDto) {
     Order order = orderMapper.toEntity(orderDto);
-    Order savedOrder = orderRepository.save(order);
-    return orderMapper.toDTO(savedOrder);
+    Order savedOrder;
+    try {
+      savedOrder = orderRepository.save(order);
+    } catch (Exception e) {
+      ApiResponse.<OrderDto>builder()
+              .httpStatusCode(HttpStatus.BAD_REQUEST)
+              .message("something wrong with request")
+              .data(orderDto)
+              .build();
+    }
+    orderDto.setId(order.getId());
+    return ApiResponse.<OrderDto>builder()
+        .httpStatusCode(HttpStatus.OK)
+        .message("order placed")
+        .data(orderDto)
+        .build();
   }
 }

@@ -9,30 +9,18 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "order_table")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<OrderItem> listOfOrderItems;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<OrderItem> getListOfOrderItems() {
-        return listOfOrderItems;
-    }
-
-    public void setListOfOrderItems(List<OrderItem> listOfOrderItems) {
-        this.listOfOrderItems = listOfOrderItems;
-    }
-
+    @Column(name = "order_special_note")
+    private String specialNote;
 }

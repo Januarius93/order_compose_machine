@@ -20,6 +20,9 @@ public class Product {
   @Column(name = "product_type")
   private DishType productType;
 
+  @Column(name = "product_description")
   private String description;
+
+  @Column(name = "is_customizable")
   private Boolean isCustomizable;
 }

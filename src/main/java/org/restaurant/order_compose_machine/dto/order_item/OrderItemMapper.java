@@ -8,20 +8,22 @@ import org.springframework.stereotype.Component;
 public class OrderItemMapper {
 
   public OrderItemDto toDTO(OrderItem orderItem) {
-    OrderItemDto orderItemDto = new OrderItemDto();
-    orderItemDto.setItemName(orderItem.getItemName());
-    orderItemDto.setQuantity(orderItem.getQuantity());
-    orderItemDto.setPrice(orderItem.getPrice().getTotalAmount());
-    return orderItemDto;
+    return OrderItemDto.builder()
+        .itemName(orderItem.getItemName())
+        .quantity(orderItem.getQuantity())
+        .price(orderItem.getPrice().getTotalAmount())
+        .specialNote(orderItem.getSpecialNote())
+        .build();
   }
 
-  public OrderItem toEntity(OrderItemDto OrderItemDto) {
+  public OrderItem toEntity(OrderItemDto orderItemDto) {
     OrderItem orderItem = new OrderItem();
-    orderItem.setItemName(OrderItemDto.getItemName());
-    orderItem.setQuantity(OrderItemDto.getQuantity());
+    orderItem.setItemName(orderItemDto.getItemName());
+    orderItem.setQuantity(orderItemDto.getQuantity());
     Price price = new Price();
-    price.setTotalAmount(OrderItemDto.getPrice());
+    price.setTotalAmount(orderItemDto.getPrice());
     orderItem.setPrice(price);
+    orderItem.setSpecialNote(orderItemDto.getSpecialNote());
     return orderItem;
   }
 }

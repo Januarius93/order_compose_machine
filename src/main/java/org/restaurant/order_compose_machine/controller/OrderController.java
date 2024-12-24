@@ -2,6 +2,7 @@ package org.restaurant.order_compose_machine.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.restaurant.order_compose_machine.config.ApiResponse;
 import org.restaurant.order_compose_machine.dto.order.OrderDto;
 import org.restaurant.order_compose_machine.dto.order.OrderMapper;
 import org.restaurant.order_compose_machine.dto.order_item.OrderItemMapper;
@@ -30,9 +31,8 @@ public class OrderController {
 
   @SneakyThrows
   @PostMapping(value = "/proceed", consumes = "application/json")
-  public @ResponseBody ResponseEntity<OrderDto>  proceedWithOrder(
+  public @ResponseBody ApiResponse<OrderDto> proceedWithOrder(
       @RequestBody @Valid OrderDto orderDto) {
-    OrderDto createdOrder = orderService.proceedWithOrder(orderDto);
-    return ResponseEntity.ok(createdOrder);
+    return orderService.proceedWithOrder(orderDto);
   }
 }
